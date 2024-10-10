@@ -2,6 +2,10 @@
 
 ![Alt text](https://github.com/ibachev/codeeditor/blob/master/TheGist.png?raw=true)
 
+## Live Demo
+
+You can check out the live deployed version of the application here: [Real-Time Collaborative Code Playground](https://code-editor.igorbachev.com/)
+
 ## Overview
 
 This project consists of a NestJS backend and a React frontend. It utilizes Docker to manage the PostgreSQL database.
