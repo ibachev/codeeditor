@@ -1,5 +1,7 @@
 # The Gist
 
+![Alt text](https://github.com/ibachev/codeeditor/blob/master/TheGist.png?raw=true)
+
 ## Overview
 
 This project consists of a NestJS backend and a React frontend. It utilizes Docker to manage the PostgreSQL database.
