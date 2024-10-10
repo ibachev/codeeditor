@@ -25,6 +25,9 @@ This project consists of a NestJS backend and a React frontend. It utilizes Dock
 ### Frontend Setup
 
 1. Navigate to the `frontend` folder and run the following commands:
+
+   ```bash
    cd ../frontend
    npm install
    npm start
+   ```
