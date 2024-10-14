@@ -5,13 +5,14 @@ import {
   OnGatewayDisconnect,
 } from '@nestjs/websockets';
 import { Socket } from 'socket.io';
+require('dotenv').config();
 
 interface User {
   userId: string;
   socketId: string; // Keep track of the socket ID along with the user ID
 }
 
-@WebSocketGateway({ cors: { origin: 'http://localhost:3001' } })
+@WebSocketGateway({ cors: { origin: process.env.REACT_URL } })
 export class VideoCallGateway implements OnGatewayDisconnect {
   @WebSocketServer() server;
 
