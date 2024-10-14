@@ -4,12 +4,14 @@ import { useNavigate, Link } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./Auth.css";
+import LoadingWithMessage from "../Session/Loader";
 
 const Login: React.FC = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [usernameError, setUsernameError] = useState("");
   const [passwordError, setPasswordError] = useState("");
+  const [loading, setLoading] = useState<boolean>(false);
   const navigate = useNavigate();
 
   const validateFields = () => {
@@ -33,14 +35,13 @@ const Login: React.FC = () => {
   const handleLogin = async () => {
     if (!validateFields()) return;
 
+    setLoading(true);
+
     try {
-      const response = await axiosInstance.post(
-        "http://localhost:3000/auth/login",
-        {
-          username,
-          password,
-        }
-      );
+      const response = await axiosInstance.post("/auth/login", {
+        username,
+        password,
+      });
 
       localStorage.setItem("token", response.data.token);
       localStorage.setItem("username", username);
@@ -49,6 +50,8 @@ const Login: React.FC = () => {
       toast.error("Login failed. Please check your credentials.", {
         position: "bottom-right",
       });
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -57,6 +60,8 @@ const Login: React.FC = () => {
       handleLogin();
     }
   };
+
+  if (loading) return <LoadingWithMessage />;
 
   return (
     <div className="auth-container">

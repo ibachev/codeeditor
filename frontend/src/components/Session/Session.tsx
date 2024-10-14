@@ -28,7 +28,7 @@ import CodeEditor from "../Editor";
 import { toast } from "react-toastify";
 import { useSocket } from "../../context/SocketContext";
 import SessionData from "../../types/session.interface";
-import VideoChat from "../VideoCall";
+import LoadingWithMessage from "./Loader";
 
 interface SessionProps {
   sessionId: string;
@@ -128,7 +128,8 @@ const Session: React.FC<SessionProps> = ({ sessionId }) => {
       });
   };
 
-  if (loading) return <CircularProgress />;
+  if (loading) return <LoadingWithMessage />;
+
   if (error) return <Typography color="error">{error}</Typography>;
 
   if (!sessionData) {

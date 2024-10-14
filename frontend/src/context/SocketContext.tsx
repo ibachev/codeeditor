@@ -82,7 +82,7 @@ export const SocketProvider: React.FC<SocketProviderProps> = ({
   const username = localStorage.getItem("username");
 
   useEffect(() => {
-    const newSocket = io("http://localhost:3000", {
+    const newSocket = io(`${process.env.REACT_APP_BACKEND_URL}`, {
       query: {
         token,
         sessionId,

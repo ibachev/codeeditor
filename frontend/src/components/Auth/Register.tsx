@@ -4,6 +4,7 @@ import { useNavigate, Link } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./Auth.css";
+import LoadingWithMessage from "../Session/Loader";
 
 const Register: React.FC = () => {
   const [username, setUsername] = useState("");
@@ -12,6 +13,7 @@ const Register: React.FC = () => {
   const [passwordError, setPasswordError] = useState("");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const validateFields = () => {
@@ -35,8 +37,10 @@ const Register: React.FC = () => {
   const handleRegister = async () => {
     if (!validateFields()) return;
 
+    setLoading(true);
+
     try {
-      await axiosInstance.post("http://localhost:3000/auth/register", {
+      await axiosInstance.post("/auth/register", {
         username,
         password,
       });
@@ -53,6 +57,8 @@ const Register: React.FC = () => {
       toast.error(errorMessage, {
         position: "bottom-right",
       });
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -61,6 +67,8 @@ const Register: React.FC = () => {
       handleRegister();
     }
   };
+
+  if (loading) return <LoadingWithMessage />;
 
   return (
     <div className="auth-container">

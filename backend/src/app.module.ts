@@ -22,6 +22,10 @@ import { PeerModule } from './peer/peer.module';
       url: process.env.DATABASE_URL,
       autoLoadEntities: true,
       synchronize: true,
+      // commented for local db
+      // ssl: {
+      //   rejectUnauthorized: false,
+      // },
     }),
     TypeOrmModule.forFeature([Code, User, Session, SessionParticipant]),
     AuthModule,

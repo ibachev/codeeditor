@@ -34,7 +34,7 @@ const Dashboard: React.FC = () => {
                 gutterBottom
                 sx={{ fontWeight: "bold", color: "#1976d2" }}
               >
-                Welcome to My App
+                Welcome to The Gist
               </Typography>
               <Typography
                 variant="h6"
