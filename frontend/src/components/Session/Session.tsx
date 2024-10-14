@@ -5,7 +5,6 @@ import {
   Typography,
   Box,
   Paper,
-  CircularProgress,
   Button,
   IconButton,
   Tooltip,
@@ -29,6 +28,7 @@ import { toast } from "react-toastify";
 import { useSocket } from "../../context/SocketContext";
 import SessionData from "../../types/session.interface";
 import LoadingWithMessage from "./Loader";
+import VideoChat from "../VideoCall";
 
 interface SessionProps {
   sessionId: string;
