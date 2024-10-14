@@ -17,6 +17,7 @@ import {
   ContentCopy,
   Lock,
   LockOpen,
+  VideoCall as VideoCallIcon,
   Menu,
   PlayArrow,
   Save,
@@ -27,6 +28,7 @@ import CodeEditor from "../Editor";
 import { toast } from "react-toastify";
 import { useSocket } from "../../context/SocketContext";
 import SessionData from "../../types/session.interface";
+import VideoChat from "../VideoCall";
 
 interface SessionProps {
   sessionId: string;
@@ -35,11 +37,14 @@ interface SessionProps {
 const Session: React.FC<SessionProps> = ({ sessionId }) => {
   const [sessionData, setSessionData] = useState<SessionData | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
+  const [videoCallOpen, setVideoCallOpen] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const [drawerOpen, setDrawerOpen] = useState<boolean>(false);
   const currentUser = localStorage.getItem("username");
   const isCreator = currentUser === sessionData?.creator.username;
-
+  const toggleVideoCall = () => {
+    setVideoCallOpen(!videoCallOpen);
+  };
   const {
     code,
     typingUser,
@@ -230,6 +235,23 @@ const Session: React.FC<SessionProps> = ({ sessionId }) => {
               </Typography>
             </Box>
           </Tooltip>
+
+          <Tooltip title={"Start a Video Chat"} arrow>
+            <Box
+              sx={{
+                p: 2,
+                borderRadius: "20px",
+                boxShadow: 3,
+                display: "flex",
+                alignItems: "center",
+                gap: 1,
+                cursor: "pointer",
+              }}
+              onClick={toggleVideoCall}
+            >
+              <VideoCallIcon sx={{ fontSize: 40, color: "green" }} />
+            </Box>
+          </Tooltip>
         </Grid>
 
         {/* Main Coding Area */}
@@ -246,7 +268,14 @@ const Session: React.FC<SessionProps> = ({ sessionId }) => {
               overflow: "hidden",
             }}
           >
-            <Grid container spacing={2}>
+            <Grid
+              container
+              spacing={2}
+              sx={{
+                width: videoCallOpen ? "80%" : "100%",
+                transition: "width 0.3s ease",
+              }}
+            >
               <Grid item xs={4} sx={{ pr: 2 }}>
                 <Typography
                   variant="h6"
@@ -272,7 +301,6 @@ const Session: React.FC<SessionProps> = ({ sessionId }) => {
                 </Box>
               </Grid>
 
-              {/* Code Editor Section */}
               <Grid item xs={8}>
                 <Box sx={{ height: "100%" }}>
                   <Box
@@ -380,6 +408,34 @@ const Session: React.FC<SessionProps> = ({ sessionId }) => {
                 </Box>
               </Grid>
             </Grid>
+
+            <Box
+              sx={{
+                position: "absolute",
+                top: 0,
+                right: 0,
+                width: videoCallOpen ? "20%" : 0,
+                height: "100%",
+                bgcolor: "background.default",
+                transition: "width 0.3s ease",
+                boxShadow: videoCallOpen
+                  ? "-5px 0 5px rgba(0, 0, 0, 0.2)"
+                  : "none",
+              }}
+            >
+              {/* Slider content */}
+              <Box
+                sx={{
+                  p: 2,
+                  display: videoCallOpen ? "grid" : "none",
+                  height: "100%",
+                  justifyContent: "center",
+                }}
+              >
+                <Typography variant="h6">Video Call Section</Typography>
+                <VideoChat />
+              </Box>
+            </Box>
           </Paper>
         </Grid>
       </Grid>

@@ -16,7 +16,7 @@ interface OnlineUsers {
 }
 
 @WebSocketGateway({ cors: { origin: 'http://localhost:3001' } })
-export class WebsocketGateway {
+export class CodingSessionGateway {
   @WebSocketServer()
   server: Server;
 

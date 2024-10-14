@@ -12,6 +12,7 @@ import { AuthModule } from './auth/auth.module';
 import { WebsocketModule } from './websocket/websocket.module';
 import { SessionParticipant } from './session/entities/session-participants.entity';
 import { CodeModule } from './code/code.module';
+import { PeerModule } from './peer/peer.module';
 
 @Module({
   imports: [
@@ -28,6 +29,7 @@ import { CodeModule } from './code/code.module';
     WebsocketModule,
     CodeModule,
     SessionModule,
+    PeerModule,
   ],
   controllers: [AppController],
   providers: [AppService],
