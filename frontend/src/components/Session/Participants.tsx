@@ -153,7 +153,7 @@ const Participants: React.FC<ParticipantsProps> = ({
         </Typography>
         <List>
           {participantsWithCreator.map((participant) => (
-            <ListItem key={participant.id}>
+            <ListItem key={participant.user.username}>
               <ListItemAvatar>
                 <Badge
                   color="success"
