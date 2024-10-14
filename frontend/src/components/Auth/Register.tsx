@@ -36,7 +36,7 @@ const Register: React.FC = () => {
     if (!validateFields()) return;
 
     try {
-      await axiosInstance.post("http://localhost:3000/auth/register", {
+      await axiosInstance.post("/auth/register", {
         username,
         password,
       });

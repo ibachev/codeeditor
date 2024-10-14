@@ -34,13 +34,10 @@ const Login: React.FC = () => {
     if (!validateFields()) return;
 
     try {
-      const response = await axiosInstance.post(
-        "http://localhost:3000/auth/login",
-        {
-          username,
-          password,
-        }
-      );
+      const response = await axiosInstance.post("/auth/login", {
+        username,
+        password,
+      });
 
       localStorage.setItem("token", response.data.token);
       localStorage.setItem("username", username);
