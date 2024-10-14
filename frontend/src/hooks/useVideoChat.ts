@@ -15,7 +15,7 @@ export const useVideoChat = (roomId: string) => {
   useEffect(() => {
     if (!socket) return;
     myPeer.current = new Peer(undefined as any, {
-      host: process.env.REACT_APP_BACKEND_URL,
+      host: "localhost",
       port: 3002,
       path: "/myapp",
     });
