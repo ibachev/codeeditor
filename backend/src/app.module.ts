@@ -21,6 +21,10 @@ import { CodeModule } from './code/code.module';
       url: process.env.DATABASE_URL,
       autoLoadEntities: true,
       synchronize: true,
+      // commented for local db
+      // ssl: {
+      //   rejectUnauthorized: false,
+      // },
     }),
     TypeOrmModule.forFeature([Code, User, Session, SessionParticipant]),
     AuthModule,
