@@ -12,7 +12,11 @@ interface User {
   socketId: string; // Keep track of the socket ID along with the user ID
 }
 
-@WebSocketGateway({ cors: { origin: process.env.REACT_URL } })
+@WebSocketGateway({
+  cors: {
+    origin: [process.env.REACT_URL, 'http://localhost:3001'],
+  },
+})
 export class VideoCallGateway implements OnGatewayDisconnect {
   @WebSocketServer() server;
 

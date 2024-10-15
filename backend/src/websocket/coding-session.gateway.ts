@@ -16,7 +16,11 @@ interface OnlineUsers {
   [sessionId: string]: string[]; // sessionId -> array of usernames
 }
 
-@WebSocketGateway({ cors: { origin: process.env.REACT_URL } })
+@WebSocketGateway({
+  cors: {
+    origin: [process.env.REACT_URL, 'http://localhost:3001'],
+  },
+})
 export class CodingSessionGateway {
   @WebSocketServer()
   server: Server;
