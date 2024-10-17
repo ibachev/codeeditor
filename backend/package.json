@@ -37,8 +37,6 @@
     "class-validator": "^0.14.1",
     "passport": "^0.7.0",
     "passport-jwt": "^4.0.1",
-    "peer": "^1.0.2",
-    "peerjs-server": "^0.2.9",
     "pg": "^8.13.0",
     "reflect-metadata": "^0.2.0",
     "rxjs": "^7.8.1",

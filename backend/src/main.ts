@@ -1,7 +1,6 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
-import { PeerServerService } from './peer/peer.service';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -16,8 +15,7 @@ async function bootstrap() {
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
     credentials: true,
   });
-  const peerService = app.get(PeerServerService);
-  peerService.enablePeerServer();
+
   await app.listen(3000);
 }
 bootstrap();
