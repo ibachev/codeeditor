@@ -7,11 +7,13 @@ import VideocamIcon from "@mui/icons-material/Videocam";
 import VideocamOffIcon from "@mui/icons-material/VideocamOff";
 import { useVideoChat } from "../hooks/useVideoChat";
 
-const VideoChat: React.FC = () => {
-  const { roomId } = useParams();
+interface VideoChatProps {
+  sessionId: string;
+}
 
+const VideoChat: React.FC<VideoChatProps> = ({ sessionId }) => {
   const { videoGridRef, myVideoRef, toggleVideo, toggleAudio } = useVideoChat(
-    roomId || "default-room"
+    sessionId || "default-room"
   );
 
   const [isVideoMuted, setIsVideoMuted] = useState(false);

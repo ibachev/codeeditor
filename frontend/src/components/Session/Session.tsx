@@ -434,7 +434,7 @@ const Session: React.FC<SessionProps> = ({ sessionId }) => {
                 }}
               >
                 <Typography variant="h6">Video Call Section</Typography>
-                <VideoChat />
+                <VideoChat sessionId={sessionId} />
               </Box>
             </Box>
           </Paper>

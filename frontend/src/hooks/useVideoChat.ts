@@ -15,10 +15,17 @@ export const useVideoChat = (roomId: string) => {
   useEffect(() => {
     if (!socket) return;
     myPeer.current = new Peer(undefined as any, {
-      host: "localhost",
-      port: 3002,
-      path: "/myapp",
+      host: "peerjsserver-production.up.railway.app", // Use the deployed backend URL
+      port: 443, // Use port 443 for HTTPS
+      path: "peerjs/myapp", // The path you defined in Nginx for PeerJS
+      secure: true,
     });
+
+    // myPeer.current = new Peer(undefined as any, {
+    //   host: "localhost",
+    //   port: 3002,
+    //   path: "/myapp",
+    // });
 
     myPeer.current.on("open", (id: string) => {
       console.log("Peer open with ID:", id);
@@ -32,7 +39,7 @@ export const useVideoChat = (roomId: string) => {
     navigator.mediaDevices
       .getUserMedia({
         video: true,
-        // audio: true,
+        audio: true,
       })
       .then((stream) => {
         myStream.current = stream;
