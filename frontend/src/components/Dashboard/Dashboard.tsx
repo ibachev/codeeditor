@@ -17,6 +17,7 @@ import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import SaveIcon from "@mui/icons-material/Save";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import HighlightIcon from "@mui/icons-material/Highlight";
+import VideocamIcon from "@mui/icons-material/Videocam";
 
 const Dashboard: React.FC = () => {
   return (
@@ -90,15 +91,16 @@ const Dashboard: React.FC = () => {
                 "Work together in real-time, with instant feedback on code changes.",
             },
             {
-              icon: <PlayArrowIcon color="success" sx={{ fontSize: 50 }} />,
-              title: "Run Code",
+              icon: <VideocamIcon color="primary" sx={{ fontSize: 50 }} />,
+              title: "Video Group Call",
               description:
-                "Execute your code in real-time and get instant results back.",
+                "Join the group video call with other participants in the session.",
             },
             {
-              icon: <SaveIcon color="warning" sx={{ fontSize: 50 }} />,
-              title: "Save Code",
-              description: "Save your code at any point and continue later.",
+              icon: <PlayArrowIcon color="success" sx={{ fontSize: 50 }} />,
+              title: "Run & Save Code",
+              description:
+                "Execute your code in real-time and get instant results back.",
             },
           ].map((card, index) => (
             <Grid
