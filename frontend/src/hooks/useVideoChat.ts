@@ -14,27 +14,6 @@ export const useVideoChat = (roomId: string) => {
 
   useEffect(() => {
     if (!socket) return;
-    myPeer.current = new Peer(undefined as any, {
-      host: "peerjsserver-production.up.railway.app", // Use the deployed backend URL
-      port: 443, // Use port 443 for HTTPS
-      path: "peerjs/myapp", // The path you defined in Nginx for PeerJS
-      secure: true,
-    });
-
-    // myPeer.current = new Peer(undefined as any, {
-    //   host: "localhost",
-    //   port: 3002,
-    //   path: "/myapp",
-    // });
-
-    myPeer.current.on("open", (id: string) => {
-      console.log("Peer open with ID:", id);
-      socket?.emit("join-room", { roomId, userId: id });
-    });
-
-    if (myVideoRef.current) {
-      myVideoRef.current.muted = true;
-    }
 
     navigator.mediaDevices
       .getUserMedia({
@@ -43,40 +22,49 @@ export const useVideoChat = (roomId: string) => {
       })
       .then((stream) => {
         myStream.current = stream;
+
         if (myVideoRef.current) {
           addVideoStream(myVideoRef.current, stream, "You");
         }
 
+        myPeer.current = new Peer(undefined as any, {
+          host: "peerjsserver-production.up.railway.app",
+          port: 443,
+          path: "peerjs/myapp",
+          secure: true,
+        });
+
+        myPeer.current.on("open", (id: string) => {
+          socket?.emit("join-room", { roomId, userId: id });
+        });
+
         myPeer.current?.on("call", (call) => {
           call.answer(stream);
           const video = document.createElement("video");
+
           call.on("stream", (userVideoStream) => {
             addVideoStream(video, userVideoStream, call.peer);
           });
 
           call.on("close", () => {
-            console.log(`Call closed for peer: ${call.peer}`);
             removeVideoStream(call.peer);
           });
         });
 
         socket?.on("user-connected", (userId: string) => {
-          console.log("User connected:", userId);
           connectToNewUser(userId, stream);
+        });
+
+        socket?.on("user-disconnected", (userId: string) => {
+          if (peers.current[userId]) {
+            peers.current[userId].call.close();
+            removeVideoStream(userId);
+          }
         });
       })
       .catch((error) => {
         console.error("Error accessing media devices:", error);
       });
-
-    // Handle user disconnection
-    socket?.on("user-disconnected", (userId: string) => {
-      console.log("User disconnected:", userId);
-      if (peers.current[userId]) {
-        peers.current[userId].call.close();
-        removeVideoStream(userId); // Correctly removing the stream based on userId
-      }
-    });
 
     return () => {
       socket?.disconnect();
@@ -89,16 +77,15 @@ export const useVideoChat = (roomId: string) => {
     const video = document.createElement("video");
 
     call?.on("stream", (userVideoStream) => {
-      addVideoStream(video, userVideoStream, userId); // Use userId for the video element
+      addVideoStream(video, userVideoStream, userId);
     });
 
     call?.on("close", () => {
-      console.log(`Call closed for userId: ${userId}`);
       removeVideoStream(userId);
     });
 
     if (call) {
-      peers.current[userId] = { call, video }; // Store peer call and video
+      peers.current[userId] = { call, video };
     }
   };
 
@@ -119,7 +106,7 @@ export const useVideoChat = (roomId: string) => {
     video.style.backgroundColor = "black";
     video.style.position = "relative";
 
-    video.dataset.peerId = peerId; // Store peerId on the video element
+    video.dataset.peerId = peerId;
 
     videoGridRef.current?.append(video);
   };
@@ -129,13 +116,13 @@ export const useVideoChat = (roomId: string) => {
 
     videoElements?.forEach((video) => {
       if (video.dataset.peerId === peerId) {
-        video.srcObject = null; // Stop the stream
-        video.remove(); // Remove video element
+        video.srcObject = null;
+        video.remove();
       }
     });
 
     if (peers.current[peerId]) {
-      delete peers.current[peerId]; // Remove the peer reference
+      delete peers.current[peerId];
     }
   };
 
