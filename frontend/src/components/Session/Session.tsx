@@ -237,7 +237,10 @@ const Session: React.FC<SessionProps> = ({ sessionId }) => {
             </Box>
           </Tooltip>
 
-          <Tooltip title={"Start a Video Chat"} arrow>
+          <Tooltip
+            title={videoCallOpen ? "Close Video Call" : "Open Video Call"}
+            arrow
+          >
             <Box
               sx={{
                 p: 2,
