@@ -15,12 +15,18 @@ import { CodeModule } from './code/code.module';
 
 @Module({
   imports: [
-    ConfigModule.forRoot(),
+    ConfigModule.forRoot({
+      isGlobal: true,
+    }),
     TypeOrmModule.forRoot({
       type: 'postgres',
       url: process.env.DATABASE_URL,
       autoLoadEntities: true,
       synchronize: true,
+      // commented for local db
+      // ssl: {
+      //   rejectUnauthorized: false,
+      // },
     }),
     TypeOrmModule.forFeature([Code, User, Session, SessionParticipant]),
     AuthModule,

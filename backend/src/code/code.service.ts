@@ -48,10 +48,7 @@ export class CodeService {
         createCodeDto.code,
       );
       const outputResult = result.run.output.trim();
-      const code = await this.codeRepository.findOne({
-        where: { session: { sessionId: sessionId } },
-        relations: ['session'],
-      });
+      const code = await this.saveCode(createCodeDto, sessionId);
 
       code.result = outputResult;
       await this.codeRepository.save(code);

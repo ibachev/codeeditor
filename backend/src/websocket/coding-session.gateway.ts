@@ -10,13 +10,18 @@ import { SessionService } from 'src/session/session.service';
 import { JwtService } from '@nestjs/jwt';
 import { UserService } from 'src/user/user.service';
 import { User } from 'src/user/entities/user.entity';
+require('dotenv').config();
 
 interface OnlineUsers {
   [sessionId: string]: string[]; // sessionId -> array of usernames
 }
 
-@WebSocketGateway({ cors: { origin: 'http://localhost:3001' } })
-export class WebsocketGateway {
+@WebSocketGateway({
+  cors: {
+    origin: [process.env.REACT_URL, 'http://localhost:3001'],
+  },
+})
+export class CodingSessionGateway {
   @WebSocketServer()
   server: Server;
 
@@ -29,6 +34,7 @@ export class WebsocketGateway {
     private readonly sessionService: SessionService,
     private jwtService: JwtService,
     private userService: UserService,
+    // private readonly configService: ConfigService,
   ) {}
 
   async handleConnection(client: Socket) {
