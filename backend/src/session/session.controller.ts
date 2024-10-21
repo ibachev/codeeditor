@@ -11,7 +11,7 @@ import {
 } from '@nestjs/common';
 import { SessionService } from './session.service';
 import { Session } from './entities/session.entity';
-import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
+import { JwtAuthGuard } from 'src/auth/guards/jwt-auth-access-token.guard.ts';
 import { SessionParticipant } from './entities/session-participants.entity';
 import { CreateSessionDto } from './dto/create-session.dto';
 

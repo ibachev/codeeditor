@@ -31,4 +31,7 @@ export class User {
 
   @Column()
   passwordHash: string;
+
+  @Column({ nullable: true })
+  hashedRefreshToken: string | null;
 }

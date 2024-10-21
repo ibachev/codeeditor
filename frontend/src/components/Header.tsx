@@ -3,6 +3,7 @@ import { AppBar, Toolbar, Typography, Button, Box } from "@mui/material";
 import SessionManager from "./Dashboard/SessionManager";
 import CodeIcon from "@mui/icons-material/Code";
 import { useNavigate } from "react-router-dom";
+import axiosInstance from "../services/axiosInstance";
 
 interface HeaderProps {
   privateLayout: boolean;
@@ -12,7 +13,9 @@ const Header: React.FC<HeaderProps> = ({ privateLayout }) => {
   const [openSessionManager, setOpenSessionManager] = useState(false);
   const navigate = useNavigate();
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
+    await axiosInstance.post("/auth/logout");
+
     localStorage.removeItem("token");
     navigate("/login");
   };
