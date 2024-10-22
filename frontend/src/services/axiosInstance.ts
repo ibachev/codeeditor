@@ -46,7 +46,6 @@ axiosInstance.interceptors.response.use(
     const { config, response } = error;
 
     if (response && response.status === 401 && !config._retry) {
-      console.log("401");
       config._retry = true; // Prevent infinite loop
 
       const newToken = await refreshAccessToken();
