@@ -49,4 +49,11 @@ export class UserService {
 
     return user;
   }
+
+  async updateUserRefreshToken(
+    userId: number,
+    hashedRefreshToken: string | null,
+  ): Promise<void> {
+    await this.userRepository.update(userId, { hashedRefreshToken });
+  }
 }

@@ -43,7 +43,7 @@ const Login: React.FC = () => {
         password,
       });
 
-      localStorage.setItem("token", response.data.token);
+      localStorage.setItem("token", response.data.accessToken);
       localStorage.setItem("username", username);
       navigate("/dashboard");
     } catch (err) {
