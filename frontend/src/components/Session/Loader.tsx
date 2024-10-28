@@ -6,7 +6,7 @@ interface LoadingWithMessageProps {
 }
 const LoadingWithMessage: React.FC<LoadingWithMessageProps> = ({
   delay = 10000, // default 10 seconds
-  message = "Sorry for the wait, the servers might be down due to inactivity. Please bear with us.",
+  message = "Sorry for the wait, the servers might be down due to inactivity. Please bear with us; this could take 1-2 minutes.",
 }) => {
   const [showMessage, setShowMessage] = useState(false);
   useEffect(() => {
